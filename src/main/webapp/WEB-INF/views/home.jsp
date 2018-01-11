@@ -14,8 +14,8 @@
 		<h1>(・_・)</h1>
 		<form method="post" style="position: relative;" action="/simulate">
 			<!-- TODO マスタみてテーブル化 -->
-			<input name="gacha" type="radio" value="madoka" checked="checked" /><img src="img/01.jpg" />
-			<input name="gacha" type="radio" value="ma"/><img src="img/02.jpg" />
+			<input name="gacha" type="radio" value="madoka" checked="checked" /><img src="img/01_magiReco.jpg" />
+			<input name="gacha" type="radio" value="ma"/><img src="img/02_gruble.jpg" />
 			<br/>
 			<input checked="checked" name="times" value="10" type="radio" />
 				10連

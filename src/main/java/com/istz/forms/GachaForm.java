@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.istz.forms;
 
@@ -35,5 +35,5 @@ public class GachaForm {
 	public void setTimes(String times) {
 		this.times = times;
 	}
-	
+
 }

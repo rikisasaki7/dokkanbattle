@@ -1,15 +1,12 @@
 package com.istz.controllers;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.catalina.connector.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.istz.forms.GachaForm;
+import com.istz.service.GachaAction;
 
 /**
  *
@@ -54,16 +52,15 @@ public class HomeController {
 
 		return "home";
 	}
-	
+
 	@RequestMapping(value = "/simulate", method = RequestMethod.POST)
 	public String simulate(@Validated GachaForm form, BindingResult result, Model model) {
 		logger.info("simulate.");
-		System.out.println(form.getGacha());
-		System.out.println(form.getTimes());
-		List<String> cards = new ArrayList<String>();
-		cards.add("yuno");
-		cards.add("hogehoge");
-		model.addAttribute("cards", cards);
+		GachaAction gachaAction = new GachaAction();
+		List<String> cards = gachaAction.simulate(form.getGacha(), form.getTimes());
+//		cards.add("yuno");
+//		cards.add("hogehoge");
+//		model.addAttribute("cards", cards);
 		return "home";
 	}
 }

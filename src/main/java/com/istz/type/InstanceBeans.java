@@ -5,17 +5,21 @@ public class InstanceBeans {
 	public class GameMaster{
 		private String gameCd;
 		private String gameName;
+		private String imageName;
 
-		public GameMaster(String gameCd, String gameName) {
+		public GameMaster(String gameCd, String gameName, String imageName) {
 			this.gameCd   = gameCd;
 			this.gameName = gameName;
+			this.imageName = imageName;
 		}
 
-		public String getGameCd   (){return this.gameCd;}
-		public String getGameName (){return this.gameName;}
+		public String getGameCd    (){return this.gameCd;}
+		public String getGameName  (){return this.gameName;}
+		public String getImageName (){return this.imageName;}
 
-		public void setGameCd   (String gameCd)  {	this.gameCd   = gameCd;}
-		public void setGameName (String gameName){	this.gameName = gameName;}
+		public void setGameCd    (String gameCd)   {this.gameCd   = gameCd;}
+		public void setGameName  (String gameName) {this.gameName = gameName;}
+		public void setImageName (String imageName){this.imageName = imageName;}
 	}
 	// レアリティマスタ
 	public class RarityMaster{

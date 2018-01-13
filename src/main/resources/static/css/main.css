@@ -1,7 +1,35 @@
 @CHARSET "UTF-8";
-h1, h2 {
-	text-align: center;
-}
 .textCenter {
 	text-align: center;
+}
+.gachaList {
+	width: 100%;
+	padding-bottom: 20px;
+}
+.gachaList td {
+	padding-top: 10px;
+    padding-bottom: 10px;
+}
+.gachaImage {
+	width: 100%;
+}
+.submitButton {
+	font-size: 1.6em;
+	width: 60%;
+	padding: 10px 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.resultBox {
+	padding: 10px;
+	border: 1px dotted #333333;
+	margin-bottom: 10px;
+}
+.resultTable {
+    width: 100%;
+}
+.resultList {
+	width: 100%;
+	text-align: center;
+	
 }

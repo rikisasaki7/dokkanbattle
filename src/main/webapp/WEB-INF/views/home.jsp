@@ -12,34 +12,41 @@
 		<h2>（ﾉ∀＼*）ｷｬ</h2>
 		<h1>そんな生活やめませんか？</h1>
 		<h1>(・_・)</h1>
-		<form method="post" style="position: relative;" action="/simulate">
-			<table class="list">
-				<c:forEach items="${gameMasterList}" var="game">
-					<tr>
+		<form method="post" action="/simulate">
+			<table class="gachaList">
+				<tr>
+					<c:forEach items="${gameMasterList}" var="game">
 						<!-- ラジオボタン -->
 						<td><input name="gacha" type="radio" value="${game.gameCd}" /></td>
 						<!-- イメージ画像 -->
-						<td><img src="${game.imageName}" /></td>
-					</tr>
-	            </c:forEach>
+						<td><img class="gachaImage" src="${game.imageName}" /></td>
+		            </c:forEach>
+				</tr>
+				<tr>
+					<!-- ラジオボタン -->
+					<td><input checked="checked" name="times" value="10" type="radio" /></td>
+					<!-- ガチャの種類 -->
+					<td>10連</td>
+					<!-- ラジオボタン -->
+					<td><input name="times" type="radio" value="1"/></td>
+					<!-- ガチャの種類 -->
+					<td>単発</td>
+				</tr>
 			</table>
-			<input checked="checked" name="times" value="10" type="radio" />
-				10連
-			<input name="times" type="radio" value="1"/>
-				単発
-			<br />
-			<input name="simulate" type="submit" value="ガチャ欲を満たそう！課金を避けよう！" />
-		</form>
-  		<fieldset style="height: 100px">
-			結果
-			<br />
-			<c:forEach items="${cards}" var="card">
-				<c:out value="${card}" />
-				<br />
-			</c:forEach>
-		</fieldset>
+			<button class="submitButton" type="submit" >ガチャ欲を満たそう！<br />課金を避けよう！</button>
+ 		</form>
 	</div>
-	<p>${pageContext.request.contextPath}</p>
-	<p>  The time on the server is ${serverTime}. </p>
-</body>
+	<c:if test="${!empty cards}">
+		<div class="resultBox">
+		    <p>結果</p>
+			<table class="resultList">
+	 			<tr><td>${cards[0]}</td><td>${cards[1]}</td></tr>
+				<tr><td>${cards[2]}</td><td>${cards[3]}</td></tr>
+				<tr><td>${cards[4]}</td><td>${cards[5]}</td></tr>
+				<tr><td>${cards[6]}</td><td>${cards[7]}</td></tr>
+				<tr><td>${cards[8]}</td><td>${cards[9]}</td></tr>
+			</table>
+		</div>	
+	</c:if>
+ </body>
 </html>

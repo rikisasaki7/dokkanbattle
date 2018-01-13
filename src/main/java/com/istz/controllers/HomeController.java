@@ -65,6 +65,14 @@ public class HomeController {
 		logger.info("simulate.");
 		System.out.println(form.getGacha());
 		System.out.println(form.getTimes());
+
+		// ゲームマスタのセット
+		// TODO DBから取得したリストを設定するように修正
+		List<GameMaster> gameMasterList = new ArrayList<>();
+		gameMasterList.add(new GameMaster("MAG", "マギレコ", "img/01_magiReco.jpg"));
+		gameMasterList.add(new GameMaster("GRB", "グラブル", "img/02_gruble.jpg"));
+		model.addAttribute("gameMasterList", gameMasterList);
+		
 		List<String> cards = new ArrayList<String>();
 		cards.add("yuno");
 		cards.add("hogehoge");

@@ -16,9 +16,9 @@ public class GachaDataMaster {
 	private String gachaKindName;
 	private int gachaDataRateAppearance;
 	public GachaDataMaster(
-			String gachaDataId, 
-			String gachaDataName, 
-			String gameCd, 
+			String gachaDataId,
+			String gachaDataName,
+			String gameCd,
 			int gachaKindSeqNo,
 			String gachaKindName,
 			int gachaDataRateAppearance){

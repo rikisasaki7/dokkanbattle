@@ -67,14 +67,14 @@ public class HomeController {
 	/**
 	 * ガチャのシミュレートをします。
 	 * ガチャの結果を画面に表示します。
+	 * @throws Exception
 	 */
 	@RequestMapping(value = "/simulate", method = RequestMethod.POST)
-	public String simulate(@Validated GachaForm form, BindingResult result, Model model) {
+	public String simulate(@Validated GachaForm form, BindingResult result, Model model) throws Exception {
 		logger.info("simulate.");
+
 		GachaAction gachaAction = new GachaAction();
-		List<String> cards = gachaAction.simulate(form.getGacha(), form.getTimes());
-		System.out.println(form.getGacha());
-		System.out.println(form.getTimes());
+		List<GachaDataMaster> cards = gachaAction.simulate(form.getGacha(), form.getTimes());
 
 		// ゲームマスタのセット
 		// TODO DBから取得したリストを設定するように修正
@@ -85,17 +85,17 @@ public class HomeController {
 
 		// ガチャ結果のセット
 		// TODO DBから取得したリストを設定するように修正
-		List<GachaDataMaster> gachaResultList = new ArrayList<GachaDataMaster>();
-		gachaResultList.add(new GachaDataMaster("MAG0001", "1個目", "MAG", 10, "十連", 1));
-		gachaResultList.add(new GachaDataMaster("MAG0002", "2個目", "MAG", 10, "十連", 1));
-		gachaResultList.add(new GachaDataMaster("MAG0003", "3個目", "MAG", 10, "十連", 1));
-		gachaResultList.add(new GachaDataMaster("MAG0004", "4個目", "MAG", 10, "十連", 1));
-		gachaResultList.add(new GachaDataMaster("MAG0004", "5個目", "MAG", 10, "十連", 1));
-		gachaResultList.add(new GachaDataMaster("MAG0004", "6個目", "MAG", 10, "十連", 1));
-		gachaResultList.add(new GachaDataMaster("MAG0004", "7個目", "MAG", 10, "十連", 1));
-		gachaResultList.add(new GachaDataMaster("MAG0004", "8個目", "MAG", 10, "十連", 1));
-		gachaResultList.add(new GachaDataMaster("MAG0004", "9個目", "MAG", 10, "十連", 1));
-		gachaResultList.add(new GachaDataMaster("MAG0004", "10個目", "MAG", 10, "十連", 1));
+		List<GachaDataMaster> gachaResultList = gachaAction.simulate(form.getGacha(), form.getTimes());
+//		gachaResultList.add(new GachaDataMaster("MAG0001", "1個目", "MAG", 10, "十連", 1));
+//		gachaResultList.add(new GachaDataMaster("MAG0002", "2個目", "MAG", 10, "十連", 1));
+//		gachaResultList.add(new GachaDataMaster("MAG0003", "3個目", "MAG", 10, "十連", 1));
+//		gachaResultList.add(new GachaDataMaster("MAG0004", "4個目", "MAG", 10, "十連", 1));
+//		gachaResultList.add(new GachaDataMaster("MAG0004", "5個目", "MAG", 10, "十連", 1));
+//		gachaResultList.add(new GachaDataMaster("MAG0004", "6個目", "MAG", 10, "十連", 1));
+//		gachaResultList.add(new GachaDataMaster("MAG0004", "7個目", "MAG", 10, "十連", 1));
+//		gachaResultList.add(new GachaDataMaster("MAG0004", "8個目", "MAG", 10, "十連", 1));
+//		gachaResultList.add(new GachaDataMaster("MAG0004", "9個目", "MAG", 10, "十連", 1));
+//		gachaResultList.add(new GachaDataMaster("MAG0004", "10個目", "MAG", 10, "十連", 1));
 		model.addAttribute("gachaResultList", gachaResultList);
 		return "home";
 	}

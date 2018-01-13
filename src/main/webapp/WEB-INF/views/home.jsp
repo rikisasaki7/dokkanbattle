@@ -17,7 +17,7 @@
 				<tr>
 					<c:forEach items="${gameMasterList}" var="game">
 						<!-- ラジオボタン -->
-						<td><input name="gacha" type="radio" value="${game.gameCd}" /></td>
+						<td><input checked="checked" name="gacha" type="radio" value="${game.gameCd}" /></td>
 						<!-- イメージ画像 -->
 						<td><img class="gachaImage" src="img/${game.imageName}" /></td>
 		            </c:forEach>
@@ -61,7 +61,7 @@
 					<c:if test="${!empty gachaResultList[9]}"><td>${gachaResultList[9].gachaDataName}</td></c:if>
 				</tr>
 			</table>
-		</div>	
+		</div>
 	</c:if>
  </body>
 </html>

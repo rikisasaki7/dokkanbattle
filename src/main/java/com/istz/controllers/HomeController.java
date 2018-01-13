@@ -21,13 +21,13 @@ import com.istz.entities.GameMaster;
 import com.istz.forms.GachaForm;
 
 /**
- *
  * @author sasaki
  * RESTをサポートしないレガシーなコントローラーです。
  * Requstに対するreturn値は遷移先のjsp名称を返却してください。
  *
  * RequestMapping
  * <li>public String home(Locale, Model) => http://localhost:8080</li>
+ * <li>public String simulate(GachaForm, BindingResultModel) => http://localhost:8080/simulate</li>
  */
 @Controller
 public class HomeController {
@@ -38,8 +38,10 @@ public class HomeController {
     GachaForm setUpForm() {
         return new GachaForm();
     }
+    
     /**
-	 * Simply selects the home view to render by returning its name.
+	 * ホーム画面を表示します。
+	 * 画面表示時にシミュレート可能なガチャ一覧を取得して画面に表示します。
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -61,6 +63,10 @@ public class HomeController {
 		return "home";
 	}
 	
+	/**
+	 * ガチャのシミュレートをします。
+	 * ガチャの結果を画面に表示します。
+	 */
 	@RequestMapping(value = "/simulate", method = RequestMethod.POST)
 	public String simulate(@Validated GachaForm form, BindingResult result, Model model) {
 		logger.info("simulate.");

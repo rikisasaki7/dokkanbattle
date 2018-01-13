@@ -56,8 +56,8 @@ public class HomeController {
 		// ゲームマスタのセット
 		// TODO DBから取得したリストを設定するように修正
 		List<GameMaster> gameMasterList = new ArrayList<>();
-		gameMasterList.add(new GameMaster("MAG", "マギレコ", "img/01_magiReco.jpg"));
-		gameMasterList.add(new GameMaster("GRB", "グラブル", "img/02_gruble.jpg"));
+		gameMasterList.add(new GameMaster("MAG", "マギレコ", "01_magiReco.jpg"));
+		gameMasterList.add(new GameMaster("GRB", "グラブル", "02_gruble.jpg"));
 		model.addAttribute("gameMasterList", gameMasterList);
 
 		return "home";
@@ -76,8 +76,8 @@ public class HomeController {
 		// ゲームマスタのセット
 		// TODO DBから取得したリストを設定するように修正
 		List<GameMaster> gameMasterList = new ArrayList<>();
-		gameMasterList.add(new GameMaster("MAG", "マギレコ", "img/01_magiReco.jpg"));
-		gameMasterList.add(new GameMaster("GRB", "グラブル", "img/02_gruble.jpg"));
+		gameMasterList.add(new GameMaster("MAG", "マギレコ", "01_magiReco.jpg"));
+		gameMasterList.add(new GameMaster("GRB", "グラブル", "02_gruble.jpg"));
 		model.addAttribute("gameMasterList", gameMasterList);
 		
 		// ガチャ結果のセット

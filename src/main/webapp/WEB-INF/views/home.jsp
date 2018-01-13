@@ -19,7 +19,7 @@
 						<!-- ラジオボタン -->
 						<td><input name="gacha" type="radio" value="${game.gameCd}" /></td>
 						<!-- イメージ画像 -->
-						<td><img class="gachaImage" src="${game.imageName}" /></td>
+						<td><img class="gachaImage" src="img/${game.imageName}" /></td>
 		            </c:forEach>
 				</tr>
 				<tr>

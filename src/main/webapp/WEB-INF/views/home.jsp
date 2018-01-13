@@ -36,15 +36,30 @@
 			<button class="submitButton" type="submit" >ガチャ欲を満たそう！<br />課金を避けよう！</button>
  		</form>
 	</div>
-	<c:if test="${!empty cards}">
+	<c:if test="${!empty gachaResultList}">
 		<div class="resultBox">
 		    <p>結果</p>
 			<table class="resultList">
-	 			<tr><td>${cards[0]}</td><td>${cards[1]}</td></tr>
-				<tr><td>${cards[2]}</td><td>${cards[3]}</td></tr>
-				<tr><td>${cards[4]}</td><td>${cards[5]}</td></tr>
-				<tr><td>${cards[6]}</td><td>${cards[7]}</td></tr>
-				<tr><td>${cards[8]}</td><td>${cards[9]}</td></tr>
+	 			<tr>
+	 				<c:if test="${!empty gachaResultList[0]}"><td>${gachaResultList[0].gachaDataName}</td></c:if>
+	 				<c:if test="${!empty gachaResultList[1]}"><td>${gachaResultList[1].gachaDataName}</td></c:if>
+	 			</tr>
+ 				<tr>
+					<c:if test="${!empty gachaResultList[2]}"><td>${gachaResultList[2].gachaDataName}</td></c:if>
+					<c:if test="${!empty gachaResultList[3]}"><td>${gachaResultList[3].gachaDataName}</td></c:if>
+				</tr>
+				<tr>
+					<c:if test="${!empty gachaResultList[4]}"><td>${gachaResultList[4].gachaDataName}</td></c:if>
+					<c:if test="${!empty gachaResultList[5]}"><td>${gachaResultList[5].gachaDataName}</td></c:if>
+				</tr>
+				<tr>
+					<c:if test="${!empty gachaResultList[6]}"><td>${gachaResultList[6].gachaDataName}</td></c:if>
+					<c:if test="${!empty gachaResultList[7]}"><td>${gachaResultList[7].gachaDataName}</td></c:if>
+				</tr>
+				<tr>
+					<c:if test="${!empty gachaResultList[8]}"><td>${gachaResultList[8].gachaDataName}</td></c:if>
+					<c:if test="${!empty gachaResultList[9]}"><td>${gachaResultList[9].gachaDataName}</td></c:if>
+				</tr>
 			</table>
 		</div>	
 	</c:if>

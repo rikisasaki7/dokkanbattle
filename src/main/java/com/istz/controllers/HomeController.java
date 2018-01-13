@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.istz.entities.GachaDataMaster;
 import com.istz.entities.GameMaster;
 import com.istz.forms.GachaForm;
 
@@ -73,10 +74,20 @@ public class HomeController {
 		gameMasterList.add(new GameMaster("GRB", "グラブル", "img/02_gruble.jpg"));
 		model.addAttribute("gameMasterList", gameMasterList);
 		
-		List<String> cards = new ArrayList<String>();
-		cards.add("yuno");
-		cards.add("hogehoge");
-		model.addAttribute("cards", cards);
+		// ガチャ結果のセット
+		// TODO DBから取得したリストを設定するように修正
+		List<GachaDataMaster> gachaResultList = new ArrayList<GachaDataMaster>();
+		gachaResultList.add(new GachaDataMaster("MAG0001", "1個目", "MAG", 10, "十連", 1));
+		gachaResultList.add(new GachaDataMaster("MAG0002", "2個目", "MAG", 10, "十連", 1));
+		gachaResultList.add(new GachaDataMaster("MAG0003", "3個目", "MAG", 10, "十連", 1));
+		gachaResultList.add(new GachaDataMaster("MAG0004", "4個目", "MAG", 10, "十連", 1));
+		gachaResultList.add(new GachaDataMaster("MAG0004", "5個目", "MAG", 10, "十連", 1));
+		gachaResultList.add(new GachaDataMaster("MAG0004", "6個目", "MAG", 10, "十連", 1));
+		gachaResultList.add(new GachaDataMaster("MAG0004", "7個目", "MAG", 10, "十連", 1));
+		gachaResultList.add(new GachaDataMaster("MAG0004", "8個目", "MAG", 10, "十連", 1));
+		gachaResultList.add(new GachaDataMaster("MAG0004", "9個目", "MAG", 10, "十連", 1));
+		gachaResultList.add(new GachaDataMaster("MAG0004", "10個目", "MAG", 10, "十連", 1));
+		model.addAttribute("gachaResultList", gachaResultList);
 		return "home";
 	}
 }

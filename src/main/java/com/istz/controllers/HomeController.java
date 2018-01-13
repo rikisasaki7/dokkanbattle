@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.istz.entities.GameMaster;
 import com.istz.forms.GachaForm;
 
 /**
@@ -43,12 +44,18 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
+		// TODO risasaki テスト用のため、いずれ消す
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-
 		String formattedDate = dateFormat.format(date);
-
 		model.addAttribute("serverTime", formattedDate);
+
+		// ゲームマスタのセット
+		// TODO DBから取得したリストを設定するように修正
+		List<GameMaster> gameMasterList = new ArrayList<>();
+		gameMasterList.add(new GameMaster("MAG", "マギレコ", "img/01_magiReco.jpg"));
+		gameMasterList.add(new GameMaster("GRB", "グラブル", "img/02_gruble.jpg"));
+		model.addAttribute("gameMasterList", gameMasterList);
 
 		return "home";
 	}

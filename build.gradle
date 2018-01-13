@@ -33,4 +33,6 @@ dependencies {
     compile('com.h2database:h2:1.4.191')
     // jsp
 	compile('org.apache.tomcat.embed:tomcat-embed-jasper:8.5.6')
+	// jstl core library
+	compile('javax.servlet:jstl:1.2')
 }

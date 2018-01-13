@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
-<%--@ taglib uri="http://www.springframework.org/spring-social/social/tags" prefix="c" --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="/css/main.css">
@@ -13,10 +13,16 @@
 		<h1>そんな生活やめませんか？</h1>
 		<h1>(・_・)</h1>
 		<form method="post" style="position: relative;" action="/simulate">
-			<!-- TODO マスタみてテーブル化 -->
-			<input name="gacha" type="radio" value="madoka" checked="checked" /><img src="img/01_magiReco.jpg" />
-			<input name="gacha" type="radio" value="ma"/><img src="img/02_gruble.jpg" />
-			<br/>
+			<table class="list">
+				<c:forEach items="${gameMasterList}" var="game">
+					<tr>
+						<!-- ラジオボタン -->
+						<td><input name="gacha" type="radio" value="${game.gameCd}" /></td>
+						<!-- イメージ画像 -->
+						<td><img src="${game.imageName}" /></td>
+					</tr>
+	            </c:forEach>
+			</table>
 			<input checked="checked" name="times" value="10" type="radio" />
 				10連
 			<input name="times" type="radio" value="1"/>
@@ -24,13 +30,13 @@
 			<br />
 			<input name="simulate" type="submit" value="ガチャ欲を満たそう！課金を避けよう！" />
 		</form>
- 		<fieldset name="result" style="height: 100px">
-			<c:forEach items="${cards}" var="card">
-	            <c:out value="${cards}" />
-	            <c:out value="${item}" />
-            </c:forEach>
+  		<fieldset style="height: 100px">
 			結果
 			<br />
+			<c:forEach items="${cards}" var="card">
+				<c:out value="${card}" />
+				<br />
+			</c:forEach>
 		</fieldset>
 	</div>
 	<p>${pageContext.request.contextPath}</p>

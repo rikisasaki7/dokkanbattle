@@ -5,3 +5,6 @@ h1, h2 {
 .textCenter {
 	text-align: center;
 }
+.list td {
+    padding: 5px;
+}

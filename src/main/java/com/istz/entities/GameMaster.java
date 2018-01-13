@@ -1,8 +1,4 @@
-/**
- * 
- */
 package com.istz.entities;
-
 
 /**
  * @author Riki

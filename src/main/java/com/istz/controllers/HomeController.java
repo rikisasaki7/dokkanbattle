@@ -73,8 +73,6 @@ public class HomeController {
 	public String simulate(@Validated GachaForm form, BindingResult result, Model model) throws Exception {
 		logger.info("simulate.");
 
-		GachaAction gachaAction = new GachaAction();
-		List<GachaDataMaster> cards = gachaAction.simulate(form.getGacha(), form.getTimes());
 
 		// ゲームマスタのセット
 		// TODO DBから取得したリストを設定するように修正
@@ -85,6 +83,7 @@ public class HomeController {
 
 		// ガチャ結果のセット
 		// TODO DBから取得したリストを設定するように修正
+		GachaAction gachaAction = new GachaAction();
 		List<GachaDataMaster> gachaResultList = gachaAction.simulate(form.getGacha(), form.getTimes());
 //		gachaResultList.add(new GachaDataMaster("MAG0001", "1個目", "MAG", 10, "十連", 1));
 //		gachaResultList.add(new GachaDataMaster("MAG0002", "2個目", "MAG", 10, "十連", 1));

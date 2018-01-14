@@ -200,7 +200,7 @@ public class DokkanbattleApplication extends SpringBootServletInitializer implem
     		Short raritySeqNo    = (Short)record.get("rarity_seq_no");
     		Byte  rateAppearance = (Byte)record.get("rate_appearance");
     		rateSum = rateSum + rateAppearance;
-    		rarity.put(raritySeqNo, rateSum);
+    		rarity.put(raritySeqNo, rateSum - 1);
     	}
     	rarityMasterMap.put(gameCd, rarity);
     	if (rateSum != 100) {
@@ -267,7 +267,7 @@ public class DokkanbattleApplication extends SpringBootServletInitializer implem
     		Byte gachaDataRateAppearance  = (Byte)record.get("gacha_data_rate_appearance");
     		rateSum = rateSum + gachaDataRateAppearance;
     		GachaDataMaster gachaDataMaster = new GachaDataMaster(gachaDataId, gachaDataName, gameCd,
-    				gachaKindSeqNo, null, rateSum);
+    				gachaKindSeqNo, null, rateSum - 1);
     		gachaDataMasterList.add(gachaDataMaster);
     	}
     	gachaDataMasterMap.put(gameCd + gachaKindSeqNo, gachaDataMasterList);

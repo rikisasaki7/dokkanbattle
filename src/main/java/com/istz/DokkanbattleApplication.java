@@ -27,7 +27,7 @@ public class DokkanbattleApplication extends SpringBootServletInitializer implem
 
 	public static List<StaticBeans.GachaClasses> gachaKindBeanList;
 
-	public static Map<String, Map<Short, Integer>> rarityMasterMap;
+	public static Map<String, Map<Integer, Integer>> rarityMasterMap;
 
 	public static Map<String, List<GachaDataMaster>> gachaDataMasterMap;
 
@@ -42,9 +42,9 @@ public class DokkanbattleApplication extends SpringBootServletInitializer implem
     @Override
     public void run(String... args) throws Exception {
     	// テーブル作成
-    	createTable();
+//    	createTable();
     	// レコード作成
-    	insertRecord();
+//    	insertRecord();
     	// ガチャとクラスのマッピング
     	mappingGachaAndJavaClass();
     	// レアリティマスタを取得　※DBアクセスを最小限にするために起動時にメモリに格納
@@ -175,55 +175,28 @@ public class DokkanbattleApplication extends SpringBootServletInitializer implem
 
 
     }
-    private void getRarityMaster() throws Exception {
-		rarityMasterMap = new HashMap<String, Map<Short,Integer>>();
-    	getEachRarity("MAG");
-    	getEachRarity("GRB");
-	}
-
-	private void getEachRarity(String gameCd) throws Exception {
-		List<Map<String, Object>> ret = jdbc.queryForList(
-  			  "select"
-  			+ "  *"
-  			+ "from "
-  			+ "  RARITY_MASTER "
-  			+ "where"
-  			+ "  game_cd = ? "
-  			+ "order by "
-  			+ "  rarity_seq_no"
-  			, gameCd
-  			);
-
-		int rateSum = 0;
-		Map <Short, Integer> rarity = new TreeMap<Short, Integer>();
-    	for (Map<String, Object> record : ret) {
-    		Short raritySeqNo    = (Short)record.get("rarity_seq_no");
-    		Byte  rateAppearance = (Byte)record.get("rate_appearance");
-    		rateSum = rateSum + rateAppearance;
-    		rarity.put(raritySeqNo, rateSum - 1);
-    	}
-    	rarityMasterMap.put(gameCd, rarity);
-    	if (rateSum != 100) {
-    		throw new Exception(gameCd + "のレアリティが不正です。rate_appearanceの合計が100かどうか確かめて下さい。[RARITY_MASTER]");
-    	}
-	}
 
 	private void mappingGachaAndJavaClass()
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		gachaKindBeanList = new ArrayList<StaticBeans.GachaClasses>();
 
         try {
-        	List<Map<String, Object>> ret = jdbc.queryForList(
-        			  "select"
-        			+ "  *"
-        			+ "from"
-        			+ "  GACHA_KIND_MASTER"
-        			);
+//        	List<Map<String, Object>> ret = jdbc.queryForList(
+//        			  "select"
+//        			+ "  *"
+//        			+ "from"
+//        			+ "  GACHA_KIND_MASTER"
+//        			);
+        	List<Map<String, Object>> ret = new ArrayList<Map<String, Object>>();
+        	createGachaKindMaster(ret, "MAG",  1, "com.istz.service.gachaKind.magiReco.MAG01");
+        	createGachaKindMaster(ret, "MAG", 10, "com.istz.service.gachaKind.magiReco.MAG10");
+        	createGachaKindMaster(ret, "GRB",  1, "com.istz.service.gachaKind.grablu.GRB01"  );
+        	createGachaKindMaster(ret, "GRB", 10, "com.istz.service.gachaKind.grablu.GRB10"  );
         	for (Map<String, Object> record : ret) {
         		StaticBeans parentBean = new StaticBeans();
-        		String gameCd    = (String)record.get("game_cd");
-        		Short  times       = (Short)record.get("gacha_kind_times");
-        		String className = (String)record.get("java_class_name");
+        		String gameCd        = (String)record.get("game_cd");
+        		Integer times       = (Integer)record.get("gacha_kind_times");
+        		String className    = (String)record.get("java_class_name");
         		gachaKindBeanList.add(parentBean.new GachaClasses(gameCd, times, (GachaKind)Class.forName(className).newInstance()));
         	}
         } catch(ClassNotFoundException e) {
@@ -232,39 +205,172 @@ public class DokkanbattleApplication extends SpringBootServletInitializer implem
         }
 	}
 
-	private void getGachaDataMasterMap() throws Exception {
-		gachaDataMasterMap = new HashMap<String, List<GachaDataMaster>>();
-    	getEachGachaDataMasterMap("MAG", 1);
-    	getEachGachaDataMasterMap("MAG", 2);
-    	getEachGachaDataMasterMap("MAG", 3);
-    	getEachGachaDataMasterMap("MAG", 4);
-    	getEachGachaDataMasterMap("MAG", 5);
-    	getEachGachaDataMasterMap("MAG", 6);
-
-    	getEachGachaDataMasterMap("GRB", 1);
-    	getEachGachaDataMasterMap("GRB", 2);
-    	getEachGachaDataMasterMap("GRB", 3);
+	private void createGachaKindMaster(List<Map<String, Object>> ret, String gameCd, int gachaKindTimes, String javaClassName) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("game_cd", gameCd);
+		map.put("gacha_kind_times", gachaKindTimes);
+		map.put("java_class_name", javaClassName);
+		ret.add(map);
 	}
 
-	private void getEachGachaDataMasterMap(String gameCd, int gachaKindSeqNo) throws Exception {
-		List<Map<String, Object>> ret = jdbc.queryForList(
-    			  "select"
-    			+ "  *"
-    			+ "from "
-    			+ "  GACHA_DATA_MASTER "
-    			+ "where"
-    			+ "  game_cd = ? and"
-    			+ "  rarity_seq_no = ?"
-    			+ "order by "
-    			+ "  rarity_seq_no"
-    			, gameCd, gachaKindSeqNo
-    			);
+    private void getRarityMaster() throws Exception {
+		rarityMasterMap = new HashMap<String, Map<Integer,Integer>>();
+		// TODO DBの代わり
+		List<Map<String, Object>> retMAG = new ArrayList<Map<String, Object>>();
+		createRarityMaster(retMAG, 1, 54);
+		createRarityMaster(retMAG, 2, 24);
+		createRarityMaster(retMAG, 3, 13);
+		createRarityMaster(retMAG, 4,  4);
+		createRarityMaster(retMAG, 5,  4);
+		createRarityMaster(retMAG, 6,  1);
+    	getEachRarity("MAG" ,retMAG);
+    	// TODO DBの代わり
+    	List<Map<String, Object>> retGRB = new ArrayList<Map<String, Object>>();
+		createRarityMaster(retGRB, 1, 67);
+		createRarityMaster(retGRB, 2, 30);
+		createRarityMaster(retGRB, 3,  3);
+    	getEachRarity("GRB" ,retGRB);
+	}
+
+	private void getEachRarity(String gameCd ,List<Map<String, Object>> ret) throws Exception {
+		// TODO DBは後回し
+//		List<Map<String, Object>> ret = jdbc.queryForList(
+//  			  "select"
+//  			+ "  *"
+//  			+ "from "
+//  			+ "  RARITY_MASTER "
+//  			+ "where"
+//  			+ "  game_cd = ? "
+//  			+ "order by "
+//  			+ "  rarity_seq_no"
+//  			, gameCd
+//  			);
+
+		int rateSum = 0;
+		Map <Integer, Integer> rarity = new TreeMap<Integer, Integer>();
+
+		for (Map<String, Object> record : ret) {
+//			Short raritySeqNo    = record.get("rarity_seq_no");
+			Integer raritySeqNo    = (Integer)record.get("rarity_seq_no");
+			Integer  rateAppearance = (Integer)record.get("rate_appearance");
+			rateSum = rateSum + rateAppearance;
+			rarity.put(raritySeqNo, rateSum - 1);
+		}
+    	rarityMasterMap.put(gameCd, rarity);
+    	if (rateSum != 100) {
+    		throw new Exception(gameCd + "のレアリティが不正です。rate_appearanceの合計が100かどうか確かめて下さい。[RARITY_MASTER]");
+    	}
+	}
+
+
+	private void createRarityMaster(List<Map<String, Object>> ret, int raritySeqNo, int rateAppearance) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("rarity_seq_no", raritySeqNo);
+		map.put("rate_appearance", rateAppearance);
+		ret.add(map);
+	}
+
+	private void getGachaDataMasterMap() throws Exception {
+		gachaDataMasterMap = new HashMap<String, List<GachaDataMaster>>();
+
+		List<Map<String, Object>> retMAG01 = new ArrayList<Map<String, Object>>();
+		createGachaDataMaster(retMAG01, "MAG0101", "★２メモリア_揺れるまどかの心 ",    20);
+		createGachaDataMaster(retMAG01, "MAG0102", "★２メモリア_近くにいるのはだれ？", 20);
+		createGachaDataMaster(retMAG01, "MAG0103", "★２メモリア_人間が一番怖い",       20);
+		createGachaDataMaster(retMAG01, "MAG0104", "★２メモリア_メガネとは？",         20);
+		createGachaDataMaster(retMAG01, "MAG0105", "★２メモリア_味覚の正体とは？",     20);
+		List<Map<String, Object>> retMAG02 = new ArrayList<Map<String, Object>>();
+		createGachaDataMaster(retMAG02, "MAG0201", "★２魔法少女_つるの",     20);
+		createGachaDataMaster(retMAG02, "MAG0202", "★２魔法少女_やちよ",     20);
+		createGachaDataMaster(retMAG02, "MAG0203", "★２魔法少女_久野ちゃん", 20);
+		createGachaDataMaster(retMAG02, "MAG0204", "★２魔法少女_鈴木絵里",   20);
+		createGachaDataMaster(retMAG02, "MAG0205", "★２魔法少女_リエリー",   20);
+		List<Map<String, Object>> retMAG03 = new ArrayList<Map<String, Object>>();
+		createGachaDataMaster(retMAG03, "MAG0301", "★３メモリア_氷は冷たい",       20);
+		createGachaDataMaster(retMAG03, "MAG0302", "★３メモリア_ジョブズ？",       20);
+		createGachaDataMaster(retMAG03, "MAG0303", "★３メモリア_苦いお寿司",       20);
+		createGachaDataMaster(retMAG03, "MAG0304", "★３メモリア_左利き用ハサミ",   20);
+		createGachaDataMaster(retMAG03, "MAG0305", "★３メモリア_とある女性の内臓", 20);
+		List<Map<String, Object>> retMAG04 = new ArrayList<Map<String, Object>>();
+		createGachaDataMaster(retMAG04, "MAG0401","★３魔法少女_オリコ",   20);
+		createGachaDataMaster(retMAG04, "MAG0402","★３魔法少女_まさら",   20);
+		createGachaDataMaster(retMAG04, "MAG0403","★３魔法少女_かえで",   20);
+		createGachaDataMaster(retMAG04, "MAG0404","★３魔法少女_セットン", 20);
+		createGachaDataMaster(retMAG04, "MAG0405","★３魔法少女_赤い人",   20);
+		List<Map<String, Object>> retMAG05 = new ArrayList<Map<String, Object>>();
+		createGachaDataMaster(retMAG05, "MAG0501","★４メモリア_無味無臭",          20);
+		createGachaDataMaster(retMAG05, "MAG0502","★４メモリア_サイフの中身は0円", 20);
+		createGachaDataMaster(retMAG05, "MAG0503","★４メモリア_下顎へのアッパー",  20);
+		createGachaDataMaster(retMAG05, "MAG0504","★４メモリア_水曜どうでしょう",  20);
+		createGachaDataMaster(retMAG05, "MAG0505","★４メモリア_青汁",              20);
+		List<Map<String, Object>> retMAG06 = new ArrayList<Map<String, Object>>();
+		createGachaDataMaster(retMAG06, "MAG0601", "★４魔法少女_杏子",     20);
+		createGachaDataMaster(retMAG06, "MAG0602", "★４魔法少女_まどか",   20);
+		createGachaDataMaster(retMAG06, "MAG0603", "★４魔法少女_ほむら",   20);
+		createGachaDataMaster(retMAG06, "MAG0604", "★４魔法少女_さやか",   20);
+		createGachaDataMaster(retMAG06, "MAG0605", "★４魔法少女_マミさん", 20);
+
+    	getEachGachaDataMasterMap("MAG", 1, retMAG01);
+    	getEachGachaDataMasterMap("MAG", 2, retMAG02);
+    	getEachGachaDataMasterMap("MAG", 3, retMAG03);
+    	getEachGachaDataMasterMap("MAG", 4, retMAG04);
+    	getEachGachaDataMasterMap("MAG", 5, retMAG05);
+    	getEachGachaDataMasterMap("MAG", 6, retMAG06);
+
+    	List<Map<String, Object>> retGRB01 = new ArrayList<Map<String, Object>>();
+		createGachaDataMaster(retGRB01, "GRB0101", "R_バロワ",                  20);
+		createGachaDataMaster(retGRB01, "GRB0102", "R_カルバ",                  20);
+		createGachaDataMaster(retGRB01, "GRB0103", "R_クムエ",                  20);
+		createGachaDataMaster(retGRB01, "GRB0104", "R_アンナ",                  20);
+		createGachaDataMaster(retGRB01, "GRB0105", "R_マリー",                  10);
+		createGachaDataMaster(retGRB01, "GRB0106", "R_筋肉先生",                5);
+		createGachaDataMaster(retGRB01, "GRB0107", "R_ラーメン大好き小泉さん",  5);
+
+		List<Map<String, Object>> retGRB02 = new ArrayList<Map<String, Object>>();
+		createGachaDataMaster(retGRB02, "GRB0201", "SR_ダーント",      20);
+		createGachaDataMaster(retGRB02, "GRB0202", "SR_スーテラ",      20);
+		createGachaDataMaster(retGRB02, "GRB0203", "SR_ライアン",      20);
+		createGachaDataMaster(retGRB02, "GRB0204", "SR_アリーザ",      20);
+		createGachaDataMaster(retGRB02, "GRB0205", "SR_ジェシカ",      10);
+		createGachaDataMaster(retGRB02, "GRB0206", "SR_髭長おじさん",  5);
+		createGachaDataMaster(retGRB02, "GRB0207", "SR_クジンシー"  ,  5);
+
+		List<Map<String, Object>> retGRB03 = new ArrayList<Map<String, Object>>();
+		createGachaDataMaster(retGRB03, "GRB0301",  "SSR_エッセル",  20);
+		createGachaDataMaster(retGRB03, "GRB0302",  "SSR_ドランク",  20);
+		createGachaDataMaster(retGRB03, "GRB0303",  "SSR_サラーサ",  20);
+		createGachaDataMaster(retGRB03, "GRB0304",  "SSR_アンチラ",  20);
+		createGachaDataMaster(retGRB03, "GRB0305",  "SSR_ジェシカ",  10);
+		createGachaDataMaster(retGRB03, "GRB0306",  "SSR_東山奈央",   2);
+		createGachaDataMaster(retGRB03, "GRB0307",  "SSR_早見沙織",   2);
+		createGachaDataMaster(retGRB03, "GRB0307",  "SSR_加隈亜衣",   2);
+		createGachaDataMaster(retGRB03, "GRB0307",  "SSR_中田譲二",   2);
+		createGachaDataMaster(retGRB03, "GRB0307",  "SSR_藤原啓治",   2);
+
+    	getEachGachaDataMasterMap("GRB", 1, retGRB01);
+    	getEachGachaDataMasterMap("GRB", 2, retGRB02);
+    	getEachGachaDataMasterMap("GRB", 3, retGRB03);
+	}
+
+	private void getEachGachaDataMasterMap(String gameCd, int gachaKindSeqNo, List<Map<String, Object>> ret) throws Exception {
+//		List<Map<String, Object>> ret = jdbc.queryForList(
+//    			  "select"
+//    			+ "  *"
+//    			+ "from "
+//    			+ "  GACHA_DATA_MASTER "
+//    			+ "where"
+//    			+ "  game_cd = ? and"
+//    			+ "  rarity_seq_no = ?"
+//    			+ "order by "
+//    			+ "  rarity_seq_no"
+//    			, gameCd, gachaKindSeqNo
+//    			);
     	List<GachaDataMaster> gachaDataMasterList = new ArrayList<GachaDataMaster>();
     	int rateSum = 0;
     	for (Map<String, Object> record : ret) {
     		String gachaDataId               = (String)record.get("gacha_data_id");
     		String gachaDataName             = (String)record.get("gacha_data_name");
-    		Byte gachaDataRateAppearance  = (Byte)record.get("gacha_data_rate_appearance");
+    		Integer gachaDataRateAppearance  = (Integer)record.get("gacha_data_rate_appearance");
     		rateSum = rateSum + gachaDataRateAppearance;
     		GachaDataMaster gachaDataMaster = new GachaDataMaster(gachaDataId, gachaDataName, gameCd,
     				gachaKindSeqNo, null, rateSum - 1);
@@ -274,6 +380,14 @@ public class DokkanbattleApplication extends SpringBootServletInitializer implem
     	if (rateSum != 100) {
     		throw new Exception(gameCd + gachaKindSeqNo + "のレアリティが不正です。rate_appearanceの合計が100かどうか確かめて下さい。[GACHA_DATA_MASTER]");
     	}
+	}
+
+	private void createGachaDataMaster(List<Map<String, Object>> ret, String gachaDataId, String gacha_data_name, int gachaDataRateAppearance) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("gacha_data_id", gachaDataId);
+		map.put("gacha_data_name", gacha_data_name);
+		map.put("gacha_data_rate_appearance", gachaDataRateAppearance);
+		ret.add(map);
 	}
 
     @Override

@@ -18,10 +18,10 @@ public class OneGacha {
 
 		int preRateAppearanceForRarityMaster = rndNumFrom;
 		int randomNumForRarityMaster = rndNumTo;
-		for (Map.Entry<Short, Integer> entry : DokkanbattleApplication.rarityMasterMap.get(gameCd).entrySet()) {
+		for (Map.Entry<Integer, Integer> entry : DokkanbattleApplication.rarityMasterMap.get(gameCd).entrySet()) {
 			int rateAppearance = entry.getValue();
 			if (preRateAppearanceForRarityMaster <= randomNumForRarityMaster && randomNumForRarityMaster <= rateAppearance) {
-				getRarity = entry.getKey().intValue();
+				getRarity = entry.getKey();
 				break;
 			}
 			preRateAppearanceForRarityMaster = rateAppearance;

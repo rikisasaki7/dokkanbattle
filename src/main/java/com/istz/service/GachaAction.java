@@ -14,7 +14,7 @@ public class GachaAction {
 		GachaKind gachaKinClass = null;
 		for (StaticBeans.GachaClasses gachaKindBean: DokkanbattleApplication.gachaKindBeanList){
 			if (gachaKindBean.getGameCd().equals(gameCd)
-					&& gachaKindBean.getGachaKindTimes().equals(Short.parseShort(gachaKind))){
+					&& gachaKindBean.getGachaKindTimes().equals(Integer.parseInt(gachaKind))){
 				gachaKinClass = gachaKindBean.getGachaClass();
 			}
 		}

@@ -17,20 +17,20 @@
 				<tr>
 					<c:forEach items="${gameMasterList}" var="game">
 						<!-- ラジオボタン -->
-						<td><input checked="checked" name="gacha" type="radio" value="${game.gameCd}" /></td>
+						<td><input checked="checked" id="${game.gameCd}" name="gacha" type="radio" value="${game.gameCd}" /></td>
 						<!-- イメージ画像 -->
-						<td><img class="gachaImage" src="img/${game.imageName}" /></td>
+						<td><label for="${game.gameCd}"><img class="gachaImage" src="img/${game.imageName}" /></label></td>
 		            </c:forEach>
 				</tr>
 				<tr>
 					<!-- ラジオボタン -->
-					<td><input checked="checked" name="times" value="10" type="radio" /></td>
+					<td><input id="multipleGacha" name="times" value="10" type="radio" checked="checked" /></td>
 					<!-- ガチャの種類 -->
-					<td>10連</td>
+					<td><label for="multipleGacha">10連</label></td>
 					<!-- ラジオボタン -->
-					<td><input name="times" type="radio" value="1"/></td>
+					<td><input id="singleGacha" name="times" type="radio" value="1"/></td>
 					<!-- ガチャの種類 -->
-					<td>単発</td>
+					<td><label for="singleGacha">単発</label></td>
 				</tr>
 			</table>
 			<button class="submitButton" type="submit" >ガチャ欲を満たそう！<br />課金を避けよう！</button>

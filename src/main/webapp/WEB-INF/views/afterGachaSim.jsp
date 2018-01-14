@@ -6,12 +6,8 @@
 <link rel="stylesheet" type="text/css" href="/css/main.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
-<body class="homeBody">
+<body>
 	<div class="textCenter">
-		<h1>課金は家賃まで！</h1>
-		<h2>（ﾉ∀＼*）ｷｬ</h2>
-		<h1>そんな生活やめませんか？</h1>
-		<h1>(・_・)</h1>
 		<form method="post" action="/simulate">
 			<table class="gachaList">
 				<tr>

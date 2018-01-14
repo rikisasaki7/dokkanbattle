@@ -96,6 +96,6 @@ public class HomeController {
 //		gachaResultList.add(new GachaDataMaster("MAG0004", "9個目", "MAG", 10, "十連", 1));
 //		gachaResultList.add(new GachaDataMaster("MAG0004", "10個目", "MAG", 10, "十連", 1));
 		model.addAttribute("gachaResultList", gachaResultList);
-		return "home";
+		return "afterGachaSim";
 	}
 }

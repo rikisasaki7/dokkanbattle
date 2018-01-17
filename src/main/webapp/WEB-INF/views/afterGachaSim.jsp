@@ -9,7 +9,7 @@
 <body>
 	<div class="textCenter">
 		<form method="post" action="/simulate">
-			<table class="gachaList">
+			<table class="gachaList_2">
 				<tr>
 					<c:forEach items="${gameMasterList}" var="game">
 						<!-- ラジオボタン -->
@@ -29,7 +29,7 @@
 					<td><label for="singleGacha">単発</label></td>
 				</tr>
 			</table>
-			<button class="submitButton" type="submit" >ガチャ欲を満たそう！<br />課金を避けよう！</button>
+			<button class="submitButton_2" type="submit" >ガチャ欲を満たそう！<br />課金を避けよう！</button>
  		</form>
 	</div>
 	<c:if test="${!empty gachaResultList}">

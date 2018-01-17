@@ -10,8 +10,8 @@
 	<div class="textCenter">
 		<h1>課金は家賃まで！</h1>
 		<h2>（ﾉ∀＼*）ｷｬ</h2>
-		<h1>そんな生活やめませんか？</h1>
-		<h1>(・_・)</h1>
+		<h1 class="text2">そんな生活やめませんか？</h1>
+		<h1 class="text2">(・_・)</h1>
 		<form method="post" action="/simulate">
 			<table class="gachaList">
 				<tr>

@@ -7,60 +7,145 @@
 }
 .textCenter {
 	text-align: center;
-
+	height 100%;
 }
 
 .text2 {
 	-webkit-animation: fadeIn 10s ease-in-out 0s 1 normal;
+	height 100%;
+	width: 100%;
 }
 
 .gachaList {
-	width: 60%;
-	margin: auto;
-	padding-bottom: 20px;
+	width: 100%;
+	margin: 1%;
+	padding-bottom: 1%;
 	-webkit-animation: fadeIn 5s steps(1) 0s 1 normal;
-
+	height 100%;
 }
 .gachaList_2 {
-	width: 60%;
-	margin: auto;
-	padding-bottom: 20px;
-
+	width: 100%;
+	margin: 1%;
+	padding-bottom: 1%;
+	height 100%;
 }
 .gachaList td {
-	padding-top: 10px;
-    padding-bottom: 10px;
+	padding-top: 2%;
+    padding-bottom: 2%;
+    height 100%;
+}
+.gachaList_2 td {
+	padding-top: 2%;
+    padding-bottom: 2%;
+    height 100%;
 }
 .gachaImage {
 	width: 100%;
+	height 100%;
+}
+
+
+/*
+input[type="radio"]:checked ~ .MAG_class_label {
+	font-size: 100px;
+}
+*/
+#MAG, #GRB {
+	margin-bottom :10%;
+	display: none;
+}
+	/*
+#MAG:checked + label, #GRB:checked + label {
+	border :solid 7px #3c3;
+
+	border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+	border-bottom-width : solid 50px #3c3;
+}
+	 */
+#MAG:checked + label, #GRB:checked + label {
+	/*
+	border-top :solid 7px #3c3;
+	border-left :solid 7px #3c3;
+	*/
+	background-color : #0cc;
+	border-right  :solid 10px #0cc;
+	border-bottom :solid 10px #0cc;
+	/*
+
+	border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+	border-bottom-width : solid 50px #3c3;
+	 */
+}
+
+#singleGacha, #multipleGacha {
+	display: none;
+}
+#singleGacha:checked + label, #multipleGacha:checked + label {
+	background-color: #0cc;
+}
+
+.GachaKind  td {
+	font-size: 1.5em;
+	height 100%;
+}
+.multipleGachaClass, .singleGachaClass {
+	border :solid 2px #00f;
+	border-radius: 10px;
 }
 .submitButton {
-	font-size: 1.6em;
+	font-size: 1.5em;
 	width: 60%;
-	padding: 10px 30px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+	padding: 1% 2%;
+    margin-top: 1%;
+    margin-bottom: 1%;
 	-webkit-animation: fadeIn 5s steps(1) 0s 1 normal;
+	display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    background: #f7f7f7;
+    border-left: solid 6px #b6fbff;
+    color: #83a4d4;
+    font-weight: bold;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+    border-radius: 1%;
+    height 100%;
 }
 .submitButton_2 {
-	font-size: 1.6em;
+	font-size: 1.5em;
 	width: 60%;
-	padding: 10px 30px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+	padding: 1% 2%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    background: #f7f7f7;
+    border-left: solid 6px #b6fbff;
+    color: #83a4d4;
+    font-weight: bold;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+    border-radius: 13px;
+    height 100%;
 }
 .resultBox {
-	padding: 10px;
+	padding: 1%;
 	border: 1px dotted #333333;
-	margin-bottom: 10px;
 	animation: fadeIn 5s ease 0s 1 normal;
     -webkit-animation: fadeIn 2s ease 0s 1 normal;
+	height 100%;
 }
 .resultTable {
     width: 100%;
+    height 100%;
 }
 .resultList {
 	width: 100%;
+	height 100%;
+	font-size: 1.0em;
 	text-align: left;
 }
 
@@ -73,10 +158,25 @@
     0% {opacity: 0}
     100% {opacity: 1}
 }
-
-html, body {
-	height:80%;
-	width:80%;
-	margin-left : auto;
-	margin-right : auto;
+html {
+	background: linear-gradient(to right, #b6fbff, #83a4d4);
+	height 100%;
+	width 100%;
 }
+
+body {
+	margin-top: 2%;
+	height 100%;
+	width 100%;
+}
+
+@media (min-width: 1000px) {
+  body {
+    margin-top: 2%;
+	height 100%;
+	width 100%;
+	margin-right: 30%;
+	margin-left: 30%;
+  }
+}
+

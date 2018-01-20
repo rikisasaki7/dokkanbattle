@@ -12,21 +12,34 @@
 			<table class="gachaList_2">
 				<tr>
 					<c:forEach items="${gameMasterList}" var="game">
-						<!-- ラジオボタン -->
-						<td><input checked="checked" id="${game.gameCd}" name="gacha" type="radio" value="${game.gameCd}" /></td>
-						<!-- イメージ画像 -->
-						<td><label for="${game.gameCd}"><img class="gachaImage" src="img/${game.imageName}" /></label></td>
+						<td>
+	    					<c:choose>
+						    <c:when test="${game.gameCd == 'MAG'}">
+						        <input checked="checked" id="${game.gameCd}" class="${game.gameCd}Class" name="gacha" type="radio" value="${game.gameCd}" />
+						    </c:when>
+						    <c:otherwise>
+						        <input id="${game.gameCd}" class="${game.gameCd}Class" name="gacha" type="radio" value="${game.gameCd}" />
+						    </c:otherwise>
+						    </c:choose>
+     						<!-- ラジオボタン -->
+						    <!-- イメージ画像 -->
+						    <label for="${game.gameCd}" class="${game.gameCd}ClassLabel"><img class="gachaImage" src="img/${game.imageName}" /></label>
+						</td>
 		            </c:forEach>
 				</tr>
-				<tr>
-					<!-- ラジオボタン -->
-					<td><input id="multipleGacha" name="times" value="10" type="radio" checked="checked" /></td>
-					<!-- ガチャの種類 -->
-					<td><label for="multipleGacha">10連</label></td>
-					<!-- ラジオボタン -->
-					<td><input id="singleGacha" name="times" type="radio" value="1"/></td>
-					<!-- ガチャの種類 -->
-					<td><label for="singleGacha">単発</label></td>
+				<tr class="GachaKind">
+					<td>
+    					<!-- ラジオボタン -->
+					    <input id="multipleGacha" name="times" value="10" type="radio" checked="checked" />
+					     <!-- ガチャの種類 -->
+					    <label class="multipleGachaClass" for="multipleGacha">　10連　</label>
+					</td>
+					<td>
+					    <!-- ラジオボタン -->
+					    <input id="singleGacha" name="times" type="radio" value="1"/>
+					    <!-- ガチャの種類 -->
+					    <label class="singleGachaClass" for="singleGacha">　単発　</label>
+					</td>
 				</tr>
 			</table>
 			<button class="submitButton_2" type="submit" >ガチャ欲を満たそう！<br />課金を避けよう！</button>
